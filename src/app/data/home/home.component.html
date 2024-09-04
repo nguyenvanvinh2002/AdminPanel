@@ -1,0 +1,35 @@
+ <div *ngIf="isLogin" class="dashboard">
+      <div class="card">
+          <h3>Tổng Doanh Thu</h3>
+          <p> {{sum | currency:'VND':'symbol':'1.0-0'}}</p>
+      </div>
+      <div class="card">
+          <h3>Tổng số đơn hàng</h3>
+          <p>{{odrescount.lst.length| currency:' ':'symbol':'1.0-0'}}</p>
+      </div>
+      
+      <div class="card">
+          <h3>Tổng số sản phẩm</h3>
+          <p>{{productscount.length| currency:' ':'symbol':'1.0-0'}}</p>
+      </div>
+      <div class="card">
+        <h3>Tổng số người dùng</h3>
+        <p>{{soluong.count| currency:' ':'symbol':'1.0-0'}}</p>
+    </div>
+    <div class="card">
+        <h3>Comments</h3>
+        <p>{{comment.length}}</p>
+    </div>
+    <div class="card">
+        <h3>Đơn hàng đã giao</h3>
+        <p>{{oderdagiao.length| currency:' ':'symbol':'1.0-0'}}</p>
+    </div>
+    <div class="card">
+        <h3>Đơn hàng chưa giao</h3>
+        <p>{{oderchuagiao.length| currency:' ':'symbol':'1.0-0'}}</p>
+    </div>
+    <div class="card">
+        <h3>Đơn hàng bị hủy</h3>
+        <p>{{oderhuy.length| currency:' ':'symbol':'1.0-0'}}</p>
+    </div>
+  </div>

@@ -1,0 +1,109 @@
+<div  *ngIf="isLogin" class="user-table-container">
+
+<div  class="search-user"><input (change)="search($event)"   type="text" placeholder="Tìm kiếm user....."></div>
+    <table class="user-table">
+        <thead>
+            <tr >
+                <th style="text-align: center;">ID</th>
+                <th style="text-align: center;">UserName</th>
+                <th style="text-align: center;"> Họ Và Tên</th>
+                <th style="text-align: center;">Email</th>
+                <th style="text-align: center;">Địa Chỉ</th>
+                <th style="text-align: center;">Phone</th>
+                <th style="text-align: center;">Giới Tính</th>
+                <th style="text-align: center;">Quyền</th>
+                <th style="text-align: center;">Trạng Thái</th>
+                <th style="text-align: center;">Thao Tác</th>
+                
+            </tr>
+        </thead>
+        <tbody *ngIf="!loadding">
+          
+            <tr  *ngFor="let lst of user.user | paginate: { itemsPerPage: 10, currentPage: p } ">
+                <td style="text-align: center;">{{lst.id}}</td>
+                <td style="text-align: center;">{{lst.userName}}</td>
+                <td style="text-align: center;">{{lst.hoVaTen}}</td>
+                <td style="text-align: center;">{{lst.email}}</td>
+                <td style="text-align: center;">{{lst.diaChi}}</td>
+                <td style="text-align: center;"> {{lst.soDienThoai}}</td>
+                <td style="text-align: center;">{{lst.gioiTinh}}</td>
+                <td style="text-align: center;">{{lst.roles}}</td>
+                
+                <td style="text-align: center;">
+                    <span class="status" [ngClass]="{'active': lst.status === 1, 'inactive': lst.status === 0}">
+                      {{ lst.status === 0 ? 'Lock' : 'Online' }}
+                    </span>
+                  </td>
+                  
+               
+                <td style="text-align: center;">
+                   <div style="display: flex;">
+                    <button (click)="EditUser(lst.userName)" class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                    <button (click)="deleUser(lst.userName)" style="background-color: red;" class="btn btn-edit"data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Xóa</button>
+                   </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+  <div *ngIf="loadding" class="div-load">
+   
+      <img class="icon-load" src="loadding.gif" alt=""></div>
+      <div style="text-align: center; margin: 10px;" *ngIf="user.user.length===0"><p>Không tìm thấy user này</p></div>
+    <pagination-controls class="phantrang" (pageChange)="p = $event"></pagination-controls>
+    
+</div>
+<!-- popup edit -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        
+          <form class="form-eidt" [formGroup]="EditF">
+            
+            <div class="mb-3">
+                <label for="roles" class="form-label">Quyền</label>
+                <select formControlName="roles" class="form-select" id="roles">
+                  <option value="User">User</option>
+                  <option value="Admin">Admin</option>
+                </select>
+              </div>
+            <div class="mb-3">
+              <label for="status" class="form-label">Status</label>
+              <select formControlName="status" class="form-select" id="status">
+                <option value="0">Lock</option>
+                <option value="1">Online</option>
+              </select>
+            </div>
+         
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button (click)="Edit()" type="button" class="btn btn-primary btn-edit">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- popup xóa -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc chắn muốn xóa user này không?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button (click)="dele()" type="button" class="btn btn-danger btn-remove">Xóa</button>
+        </div>
+      </div>
+    </div>
+  </div>

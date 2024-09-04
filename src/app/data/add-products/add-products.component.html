@@ -1,0 +1,33 @@
+<div  class="container">
+    <h1>Thêm Sản Phẩm</h1>
+    <form [formGroup]="AddProductsF" action="/submit-product" method="post" >
+        <div class="form-group">
+            <label for="productName">Tên Sản Phẩm:</label>
+            <input formControlName="tenSp"  type="text" id="productName" name="productName" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Danh Mục:</label>
+           <select formControlName="danhMuc" class="categories" name="" id="">
+            <option *ngFor="let lst of categories" value="{{lst.danhMuc}}">{{lst.danhMuc}}</option>
+           </select>
+        </div>
+        <div class="form-group">
+            <label for="price">Giá Sản Phẩm:</label>
+            <input formControlName="giaSp" type="number" id="price" name="price" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Ảnh Chính:</label>
+            <input (change)="onFileSelect($event)" type="file" id="image" name="image" accept="image/*" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Mô Tả:</label>
+            <textarea formControlName="mota" id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="discount">Giảm Giá (%):</label>
+            <input formControlName="giamGia" type="number" id="discount" name="discount" min="0" max="100">
+        </div>
+        
+        <button (click)="onAddPro()" type="submit">Thêm Sản Phẩm</button>
+    </form>
+</div>

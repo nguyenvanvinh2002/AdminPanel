@@ -1,0 +1,85 @@
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+   
+    text-align: left;
+}
+
+.order-table th,
+.order-table td {
+    padding: 4px ;
+    border: 1px solid #ddd;
+}
+
+.order-table thead tr {
+    background-color: #007bff;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.order-table tbody tr {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+.order-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+.button{
+    border: none;
+    background-color: rgb(252, 223, 58);
+    border-radius: 5px;
+}
+.text-table{
+    text-align: center;
+}
+.ellipsis {
+    white-space: nowrap;       
+    overflow: hidden;         
+    text-overflow: ellipsis;   
+    max-width: 150px;         
+  }
+  .red{
+    color: rgb(0, 0, 0);
+  }
+  .green{
+    color: green;
+  }
+  .yelow{
+    color: red;
+  }
+  .phantrang{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+.select{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: 12px;
+}
+.no-data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ span{
+font-weight: bold;
+}
+*{
+    font-size: 11px;
+}
+.div-load{
+    height: 400px;display: flex;align-items: center;justify-content: center;
+}
+.icon-load{
+    width: 50px;
+}

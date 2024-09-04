@@ -1,0 +1,106 @@
+<div  *ngIf="isLogin">
+  <div  class="user-table-container">
+    <div class="categories">
+   
+    <div style="margin: 10px;">Danh Mục
+        <select (change)="onDanhMucChange($event)"  name="" id="">
+          <option  (click)="allproducts()" value="">Tất cả</option>
+            <option   *ngFor="let lst of categories" value="{{lst.danhMuc}}">{{lst.danhMuc}}</option>
+        </select>
+    </div>
+   <div style="margin-left: 20px;">
+    <a href="/add-products" class="btn btn-success"><i  class="fa-solid fa-plus"></i>Thêm sản phẩm</a>
+   </div>
+</div>
+     <table class="user-table">
+         <thead>
+             <tr >
+                 <th class="table1">STT</th>
+                 <th class="table1">Tên sản phẩm</th>
+                 <th class="table1"> Danh mục</th>
+                 <th class="table1">Giá sản phẩm</th>
+                 <th class="table1">Img</th>
+                 
+                 <th class="table1">Thao Tác</th>
+                 
+             </tr>
+         </thead>
+         <tbody *ngIf="!loadding">
+             <tr *ngFor="let lst of lstproducts | paginate: { itemsPerPage: 10, currentPage: p } , let i = index " >
+                 <td class="table1">{{i + 1}}</td>
+                 <td class="table1">{{lst.tenSp}}</td>
+                 <td class="table1">{{lst.danhMuc}}</td>
+                 <td class="table1">{{lst.giaSp | currency:'VND':'symbol':'1.0-0'}}</td>
+                 <td class="table1"><img class="img-products" src="{{URL}}{{lst.img}}" alt=""loading="lazy"></td>
+                 <td class="table1">
+                  <button  (click)="editproducts(lst,lst.id)"  class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                    <button (click)="remove(lst.id)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Xóa</button>
+                 </td>
+             </tr>
+            
+         </tbody>
+         
+     </table>
+     <div *ngIf="loadding" class="div-load"><img class="icon-load" src="loadding.gif" alt=""></div>
+     <pagination-controls class="phantrang" (pageChange)="p = $event"></pagination-controls>
+ </div>
+ <!-- Modal Xác Nhận Xóa -->
+ <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc chắn muốn xóa mục này không?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button (click)="dele()" type="button" class="btn btn-danger btn-remove">Xóa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<!-- popup edit -->
+<div  class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Products</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="form-eidt" [formGroup]="EditProductsF" >
+          <div class="mb-3">
+              <label for="" class="form-label">Tên sản phẩm</label>
+             <input formControlName="tenSp" class="form-control" type="text" name="" id="" value="{{tenSp}}">
+            </div>
+         
+          <div class="mb-3">
+            <label for="" class="form-label">Giá sản phẩm</label>
+           <input formControlName="giaSp" class="form-control" type="number" name="" id="" value="{{giaSp}}">
+          </div>
+          <div class="mb-3">
+            <label for="" class="form-label">Mô tả</label>
+           <textarea  style="height: 200px;"  formControlName="mota" class="form-control" type="text" name="" id="" value="{{mota}}"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="quantyti" class="form-label">Sale</label>
+           <input formControlName="giamGia" class="form-control" type="text" name="quantyti" id="quantyti" value="{{giamGia}}">
+          </div>
+       
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button (click)="SaveEdit()"  type="button" class="btn btn-primary btn-edit">Lưu thay đổi</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

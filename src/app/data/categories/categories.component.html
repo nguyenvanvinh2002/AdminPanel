@@ -1,0 +1,61 @@
+<div *ngIf="!loadding">
+  <div   *ngIf="isLogin" class="container">
+    <div *ngFor="let lst of categories" class="box">
+       <div class="div-img"> <img style="height: 75px;" src="{{URL}}{{lst.img}}" alt="Image 1"></div>
+        <p>{{lst.danhMuc}}</p>
+        <button (click)="openRemoveCategories(lst.id)" class="delete-button btn-edit" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"><i class="fa-solid fa-trash"></i>Remove</button>
+    </div>
+   <div class="add">
+    <button  class=" box add" data-bs-toggle="modal" data-bs-target="#editModal" >+</button> 
+   </div>
+</div>
+</div>
+<div *ngIf="loadding" class="div-load">
+  <img class="icon-load" src="loadding.gif" alt=""></div>
+
+<!-- popup edit -->
+<div  class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Add Categories</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="form-eidt" [formGroup]="AddCateF"  >
+            <div class="mb-3">
+                <label for="" class="form-label">Tên danh mục</label>
+               <input formControlName="danhMuc" class="form-control" type="text" name="" id="" placeholder="Nhập tên danh mục ......">
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">Hình ảnh</label>
+                <input class="form-control" (change)="onFileSelect($event)" type="file" id="image" name="image" accept="image/*" required>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button (click)="Addcategories()" type="button" class="btn btn-primary btn-edit">Thêm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- popup xóa -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Bạn có chắc chắn muốn xóa danh mục này không?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button (click)="RemoveCategories()" type="button" class="btn btn-danger btn-remove">Xóa</button>
+          </div>
+        </div>
+      </div>
+    </div>

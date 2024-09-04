@@ -1,0 +1,86 @@
+<div  *ngIf="isLogin">
+  <div class="select"> Trạng thái :
+    <select (change)="trangthai($event)">
+        <option value="0" >Đã giao hàng </option>
+        <option value="1" selected >Chưa giao hàng</option>
+        <option value="-2">Lỗi</option>
+    </select>
+</div>
+
+
+  <table  class="order-table">
+    <thead>
+        <tr>
+            <th class="text-table">Tên Người Dùng</th>
+            <th class="text-table">Địa Chỉ</th>
+            <th class="text-table">Số Điện Thoại</th>
+            <th class="text-table">Họ và Tên</th>
+            <th class="text-table">Email</th>
+            <th class="text-table">Kích Thước</th>
+            <th class="text-table">Số Lượng</th>
+            <th class="text-table">Tên Sản Phẩm</th>
+            <th class="text-table">Giá Sản Phẩm</th>
+            <th class="text-table">Tổng Cộng</th>
+            <th class="text-table">Ngày Đặt Hàng</th>
+            <th class="text-table">Trạng Thái</th>
+            <th class="text-table">Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody *ngIf="!loadding">
+   
+        <tr *ngFor=" let lst of oders.lst | paginate: { itemsPerPage: 10, currentPage: p } ">
+            <td class="text-table">{{lst.userName}}</td>
+            <td class="text-table">{{lst.diaChi}}</td>
+            <td class="text-table">0{{lst.soDienThoai}}</td>
+            <td class="text-table">{{lst.hoVaTen}}</td>
+            <td class="text-table ellipsis">{{lst.email}}</td>
+            <td class="text-table">{{lst.size}}</td>
+            <td class="text-table">{{lst.soLuong}}</td>
+            <td class="text-table ellipsis">{{lst.tenSp}}</td>
+            <td class="text-table">{{lst.giaSp | currency:'VND':'symbol':'1.0-0'}}</td>
+            <td class="text-table">{{ lst.soLuong * lst.giaSp | currency:'VND':'symbol':'1.0-0' }}</td>
+            <td class="text-table">{{lst.dateTime | date:'dd-MM-yyyy'}}</td>
+            <td class="text-table"><span class="status" [ngClass]="{'red': lst.status === 1, 'green': lst.status === 0 , 'yelow':lst.status===-2}">
+                {{ lst.status === 0 ? 'Đã giao hàng' : lst.status ===1? 'Chưa giao hàng':'Lỗi' }}
+              </span></td>
+            <th><button (click)="editoder(lst.id,lst.userName,lst.tenSp,lst.status)" class="button" data-bs-toggle="modal" data-bs-target="#editModal">edit</button></th>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="loadding" class="div-load">
+  <img class="icon-load" src="loadding.gif" alt=""></div>
+  <p *ngIf="oders.lst.length === 0" class="no-data">Không có bản ghi nào</p>
+
+<pagination-controls class="phantrang" (pageChange)="p = $event"></pagination-controls>
+
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit trạng thái</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="form-eidt" [formGroup]="trangthaiF">
+            <div class="mb-3">
+              <label for="status" class="form-label">Trạng thái</label>
+              <select formControlName="status" class="form-select" id="status">
+                <option class="option" value="0" >Đã giao hàng</option>
+                <option class="option" value="1">Chưa giao hàng</option>
+                <option class="option" value="-2">Lỗi</option>
+              </select>
+            </div>
+         
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button (click)="saveeditoder()" type="button" class="btn btn-primary btn-edit">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
